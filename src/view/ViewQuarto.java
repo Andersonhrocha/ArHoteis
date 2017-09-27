@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
 import controller.ControllerQuarto;
@@ -26,14 +21,20 @@ public class ViewQuarto extends javax.swing.JInternalFrame {
         this.desativar_Campos();
     }
 
-    private String acao = "Salvar";
+    //Método para abrir jinternalframe centralizado
+    public void setPosicao() {
+        Dimension d = this.getDesktopPane().getSize();
+        this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
+    }//FIM DA CLASSE setPosicao
 
-    //Método para ocultar linha e colunas da tabela
+    private String acao;
+
+    //Método para ocultar linha e colunas da tabela Lista de Quartos
     public void ocultar_colunas() {
         tblLista.getColumnModel().getColumn(0).setMaxWidth(0);
         tblLista.getColumnModel().getColumn(0).setMinWidth(0);
         tblLista.getColumnModel().getColumn(0).setPreferredWidth(0);
-    }
+    }//FIM DA CLASSE ocultar_colunas
 
     //Método para desativar e limpar os campos
     public void desativar_Campos() {
@@ -49,13 +50,13 @@ public class ViewQuarto extends javax.swing.JInternalFrame {
         btnSalvar.setEnabled(false);
         btnCancelar.setEnabled(false);
         btnExcluir.setEnabled(false);
+        
         txtIdQuarto.setText("");
         txtPrecoDiario.setText("");
         txtCaracteristicas.setText("");
         txtDescricao.setText("");
         txtNumero.setText("");
-
-    }
+    }//FIM DA CLASSE desativar_Campos
 
     //Método para habilitar e limpar os campos
     public void habilitar_Campos() {
@@ -72,36 +73,31 @@ public class ViewQuarto extends javax.swing.JInternalFrame {
         btnSalvar.setEnabled(true);
         btnCancelar.setEnabled(true);
         btnExcluir.setEnabled(true);
+        
         txtIdQuarto.setText("");
         txtPrecoDiario.setText("");
         txtCaracteristicas.setText("");
         txtDescricao.setText("");
+        txtNumero.setText("");
+    }//FIM DA CLASSE habilitar_Campos
 
-    }
-
-    //Método para mostrar tabela
+    //Método para mostrar consultas no banco de dados
     public void mostrar(String buscar) {
         try {
 
-            DefaultTableModel modelo;
-
-            //Instância classe ControllerQuarto
+            //Instância da classe ControllerQuarto
             ControllerQuarto func = new ControllerQuarto();
-            modelo = func.mostrar(buscar);
 
-            tblLista.setModel(modelo);
-            lblTotalRegistros.setText("Total Registros: " + Integer.toString(func.totalRegistros));
+            //Instância da classe DefaultTableModel
+            DefaultTableModel tabelaQuarto = func.mostrar(buscar);
+
+            tblLista.setModel(tabelaQuarto);
+            lblTotalRegistros.setText("Total Registros: " + func.totalRegistros);
 
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null, e);
         }
-    }
-
-    //Método para abrir jinternalframe centralizado
-    public void setPosicao() {
-        Dimension d = this.getDesktopPane().getSize();
-        this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2);
-    }
+    }//FIM DA CLASSE mostrar
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -147,7 +143,7 @@ public class ViewQuarto extends javax.swing.JInternalFrame {
         setTitle("Cadastro de Quartos");
         setPreferredSize(new java.awt.Dimension(1050, 504));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Registro de Quartos"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Registrar Quartos"));
 
         jLabel2.setText("Número:");
 
@@ -456,39 +452,39 @@ public class ViewQuarto extends javax.swing.JInternalFrame {
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         this.habilitar_Campos();
         btnSalvar.setText("Salvar");
-        acao = "Salvar";
+        this.acao = "Salvar";
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        // TODO add your handling code here:
 
-        //Válida Campos
+        //Válidação dos Campos de cadastro
         if (txtNumero.getText().length() == 0) {
-            JOptionPane.showConfirmDialog(null, "Você deve inserir um número de quarto");
+            JOptionPane.showMessageDialog(null, "Você deve inserir um número de quarto");
             txtNumero.requestFocus();
             return;
         }
         if (txtDescricao.getText().length() == 0) {
-            JOptionPane.showConfirmDialog(null, "Você deve inserir uma descrição para o quarto");
+            JOptionPane.showMessageDialog(null, "Você deve inserir uma descrição para o quarto");
             txtDescricao.requestFocus();
             return;
         }
 
         if (txtPrecoDiario.getText().length() == 0) {
-            JOptionPane.showConfirmDialog(null, "Você deve inserir um preço diário para o Quarto de hóspedes");
+            JOptionPane.showMessageDialog(null, "Você deve inserir um preço diário para o Quarto de hóspedes");
             txtPrecoDiario.requestFocus();
             return;
         }
 
         if (txtCaracteristicas.getText().length() == 0) {
-            JOptionPane.showConfirmDialog(null, "Você deve inserir um recurso para o Quarto de hóspedes");
+            JOptionPane.showMessageDialog(null, "Você deve inserir um recurso para o Quarto de hóspedes");
             txtCaracteristicas.requestFocus();
             return;
         }
 
-        //Instância classes ModelQuarto
+        //Instância da classe ModelQuarto
         ModelQuarto pro = new ModelQuarto();
-        //Instância classes ControllerQuarto
+
+        //Instância da classe ControllerQuarto
         ControllerQuarto func = new ControllerQuarto();
 
         pro.setNumero(txtNumero.getText());
@@ -498,7 +494,6 @@ public class ViewQuarto extends javax.swing.JInternalFrame {
 
         pro.setDescricao(txtDescricao.getText());
         pro.setCaracteristicas(txtCaracteristicas.getText());
-
         pro.setPreco_diario(Double.parseDouble(txtPrecoDiario.getText()));
 
         selecionado = cboSituacao.getSelectedIndex();
@@ -507,7 +502,7 @@ public class ViewQuarto extends javax.swing.JInternalFrame {
         selecionado = cboTipoQuarto.getSelectedIndex();
         pro.setTipoQuarto((String) cboTipoQuarto.getItemAt(selecionado));
 
-        if (acao.equals("Salvar")) {
+        if (this.acao.equals("Salvar")) {
 
             if (func.inserir(pro)) {
                 JOptionPane.showMessageDialog(null, "Registro realizado com sucesso!");
@@ -515,7 +510,7 @@ public class ViewQuarto extends javax.swing.JInternalFrame {
                 this.desativar_Campos();
             }
 
-        } else if (acao.equals("Editar")) {
+        } else if (this.acao.equals("Editar")) {
             pro.setIdQuarto(Integer.parseInt(txtIdQuarto.getText()));
 
             if (func.editar(pro)) {
@@ -526,16 +521,18 @@ public class ViewQuarto extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
+
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        // TODO add your handling code here:
+
         if (!txtIdQuarto.getText().equals("")) {
             int confirmar = JOptionPane.showConfirmDialog(null, "Você tem certeza de excluir o quarto?", "Confirmar", 2);
 
             if (confirmar == 0) {
 
-                //Instância classes ModelQuarto
+                //Instância da classe ModelQuarto
                 ModelQuarto pro = new ModelQuarto();
-                //Instância classes ControllerQuarto
+
+                //Instância classe ControllerQuarto
                 ControllerQuarto func = new ControllerQuarto();
 
                 pro.setIdQuarto(Integer.parseInt(txtIdQuarto.getText()));
@@ -547,6 +544,7 @@ public class ViewQuarto extends javax.swing.JInternalFrame {
 
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
+
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         this.mostrar(txtBuscar.getText());
@@ -573,14 +571,15 @@ public class ViewQuarto extends javax.swing.JInternalFrame {
         cboTipoQuarto.transferFocus();
     }//GEN-LAST:event_cboTipoQuartoActionPerformed
 
-    private void tblListaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListaMouseClicked
-        //Tabela Lista
-        btnSalvar.setText("Editar");
-        habilitar_Campos();
-        btnExcluir.setEnabled(true);
-        acao = "Editar";
 
-        //Seleção da tabela tblLista
+    private void tblListaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListaMouseClicked
+
+        btnSalvar.setText("Editar");
+        this.habilitar_Campos();
+        btnExcluir.setEnabled(true);
+        this.acao = "Editar";
+
+        //Seleção da tabela tblLista quartos
         int linha = tblLista.rowAtPoint(evt.getPoint());
         txtIdQuarto.setText(tblLista.getValueAt(linha, 0).toString());
         txtNumero.setText(tblLista.getValueAt(linha, 1).toString());
@@ -591,6 +590,7 @@ public class ViewQuarto extends javax.swing.JInternalFrame {
         cboSituacao.setSelectedItem(tblLista.getValueAt(linha, 6).toString());
         cboTipoQuarto.setSelectedItem(tblLista.getValueAt(linha, 7).toString());
     }//GEN-LAST:event_tblListaMouseClicked
+
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.desativar_Campos();
@@ -631,4 +631,5 @@ public class ViewQuarto extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNumero;
     private javax.swing.JTextField txtPrecoDiario;
     // End of variables declaration//GEN-END:variables
-}
+
+}// FIM DA CLASSE ViewQuarto

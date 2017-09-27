@@ -30,7 +30,7 @@ public class ModuloConexao {
             JOptionPane.showMessageDialog(null, e, "ERRO", JOptionPane.ERROR_MESSAGE);
             return conexao;
         }
-    }
+    } //FIM DA CLASSE getConectar
 
     public void fecharConexao() {
         try {
@@ -41,6 +41,7 @@ public class ModuloConexao {
         } catch (Exception e) {
             e.getMessage();
         }
-    }
-}//FIM DO COGIDO
+    }//FIM DA CLASSE fecharConexao
+    
+}//FIM DA CLASSE ModuloConexao
 

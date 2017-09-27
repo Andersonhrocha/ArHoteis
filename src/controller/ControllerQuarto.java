@@ -18,11 +18,13 @@ public class ControllerQuarto extends ModuloConexao {
     private String sql = "";
     public Integer totalRegistros = 0;
 
-    //Método
+    
+    //Método para mostrar consultas no banco de dados
     public DefaultTableModel mostrar(String buscar) {
 
         String[] titulos = {"ID", "Número", "Andar", "Descrição", "Características", "Preço", "Situação", "Tipo"};
-        DefaultTableModel modelo = new DefaultTableModel(null, titulos);
+        
+        DefaultTableModel tabelaQuarto = new DefaultTableModel(null, titulos);
 
         String[] registro = new String[8];
 
@@ -43,21 +45,22 @@ public class ControllerQuarto extends ModuloConexao {
                 registro[7] = rs.getString("tipo_quarto");
 
                 totalRegistros = totalRegistros + 1;
-                modelo.addRow(registro);
-
+                tabelaQuarto.addRow(registro);
             }
-            return modelo;
+            return tabelaQuarto;
 
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null, e);
+            JOptionPane.showMessageDialog(null, e);
             return null;
         }
-    }
+    } //FIM DA CLASSE mostrar
 
-    //Método
+    
+    //Método para inserir na tabela quarto
     public boolean inserir(ModelQuarto pro) {
         sql = "INSERT INTO quarto (numero,andar,descricao,caracteristicas,preco_diario,estado,tipo_quarto)"
                 + "values (?,?,?,?,?,?,?)";
+        
         try {
 
             PreparedStatement pst = conexao.prepareStatement(sql);
@@ -78,12 +81,13 @@ public class ControllerQuarto extends ModuloConexao {
             }
 
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null, e);
+            JOptionPane.showMessageDialog(null, e);
             return false;
         }
-    }
+    } //FIM DA CLASSE inserir
+    
 
-    //Método
+    //Método para editar na tabela quarto
     public boolean editar(ModelQuarto pro) {
         sql = "UPDATE quarto SET numero=?, andar=?, descricao=?, caracteristicas=?, preco_diario=?, estado=?,tipo_quarto=?"
                 + " where id_quarto=?";
@@ -108,12 +112,13 @@ public class ControllerQuarto extends ModuloConexao {
             }
 
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null, e);
+            JOptionPane.showMessageDialog(null, e);
             return false;
         }
-    }
+    }// FIM DA CLASSE editar
+    
 
-    //Método
+    //Método 
     public boolean desocupar(ModelQuarto pro) {
         sql = "UPDATE quarto SET estado='Disponível' WHERE id_quarto=?";
 
@@ -130,7 +135,7 @@ public class ControllerQuarto extends ModuloConexao {
             }
 
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null, e);
+            JOptionPane.showMessageDialog(null, e);
             return false;
         }
     }
@@ -152,12 +157,12 @@ public class ControllerQuarto extends ModuloConexao {
             }
 
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null, e);
+            JOptionPane.showMessageDialog(null, e);
             return false;
         }
     }
 
-    //Método
+    //Método para excluir na tabela quarto
     public boolean excluir(ModelQuarto pro) {
         sql = "DELETE FROM quarto WHERE id_quarto=?";
 
@@ -175,9 +180,9 @@ public class ControllerQuarto extends ModuloConexao {
             }
 
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null, e);
+            JOptionPane.showMessageDialog(null, e);
             return false;
         }
-    }
-
-}
+    }//FIM DA CLASSE excluir
+    
+}//FIM DA CLASSE ControllerQuarto

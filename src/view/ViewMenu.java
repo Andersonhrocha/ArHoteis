@@ -93,6 +93,11 @@ public class ViewMenu extends javax.swing.JFrame {
         copyMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         copyMenuItem.setMnemonic('y');
         copyMenuItem.setText("Produtos");
+        copyMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                copyMenuItemActionPerformed(evt);
+            }
+        });
         editMenu.add(copyMenuItem);
 
         menuBar.add(editMenu);
@@ -164,12 +169,11 @@ public class ViewMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void cutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutMenuItemActionPerformed
-             // Chama a ViewQuarto
-             
-             ViewQuarto quarto = new ViewQuarto();
-             quarto.setVisible(true);
-             Desktop.add(quarto);
-             quarto.setPosicao();
+        // Chama a ViewQuarto
+        ViewQuarto quarto = new ViewQuarto();
+        quarto.setVisible(true);
+        Desktop.add(quarto);
+        quarto.setPosicao();
     }//GEN-LAST:event_cutMenuItemActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -180,6 +184,15 @@ public class ViewMenu extends javax.swing.JFrame {
             dispose();
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void copyMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyMenuItemActionPerformed
+        // Chama a ViewQuarto
+        ViewProduto produto = new ViewProduto();
+        produto.setVisible(true);
+        Desktop.add(produto);
+        produto.setPosicao();
+
+    }//GEN-LAST:event_copyMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
